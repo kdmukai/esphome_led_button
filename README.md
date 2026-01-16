@@ -8,7 +8,7 @@ Inspired by / adapted from [this reddit post](https://www.reddit.com/r/homeassis
 
 ## Components:
 * [Waveshare ESP32-S3-Zero dev board](https://www.waveshare.com/esp32-s3-zero.htm)
-* [FILN Momentary Push Button Switch](https://a.co/d/8b1aQwW)
+* [FILN Momentary Push Button Switch](https://www.amazon.com/dp/B0FN6W43G8)
 
 <img src="img/s3_zero_in_enclosure.jpg"> <img src="img/led_momentary_switch.jpg">
 
@@ -41,7 +41,7 @@ Start by creating your own new ESPHome skeleton device so that your yaml will ha
 
 Then paste those values over the relevant sections ("`auto-generate-your-own-values`") in [s3-tri-state-led-button.yaml](s3-tri-state-led-button.yaml).
 
-In my script the default state is to have the blue LED ring lit. When the button is pressed, I'll have Home Assistant turn on my backyard lights. While they're on the LED ring will change to green. When the button is pressed again to turn off the backyard lights, the LED ring will return to blue.
+In my script the default state is to have the blue LED ring lit. When the button is pressed, I'll have Home Assistant turn on my backyard lights and the button's LED ring will change to green. When the button is pressed again to turn off the backyard lights, the LED ring will return to blue.
 
 
 ## Home Assistant configuration
