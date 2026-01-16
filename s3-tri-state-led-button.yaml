@@ -35,7 +35,7 @@ output:
   - id: led_r_output
     platform: gpio
     pin: GPIO9
-    inverted: True
+    inverted: True  # we want the gpios to flow to ground when ON, prevent current when OFF
   - id: led_g_output
     platform: gpio
     pin: GPIO8
@@ -44,6 +44,7 @@ output:
     platform: gpio
     pin: GPIO7
     inverted: True
+
 
 light:
   - platform: binary
