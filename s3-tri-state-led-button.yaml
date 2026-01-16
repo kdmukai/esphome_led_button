@@ -1,0 +1,83 @@
+esphome:
+  name: s3-tri-state-led-button
+  friendly_name: S3 Tri-State LED Button
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "auto-generate-your-own-values"
+
+ota:
+  - platform: esphome
+    password: "auto-generate-your-own-values"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "S3-Tri-State-Led-Button"
+    password: "auto-generate-your-own-values"
+
+captive_portal:
+
+
+output:
+  - id: led_r_output
+    platform: gpio
+    pin: GPIO9
+    inverted: True
+  - id: led_g_output
+    platform: gpio
+    pin: GPIO8
+    inverted: True
+  - id: led_b_output
+    platform: gpio
+    pin: GPIO7
+    inverted: True
+
+light:
+  - platform: binary
+    id: led_r_light
+    name: "Red LED"
+    output: led_r_output
+  - platform: binary
+    id: led_g_light
+    name: "Green LED"
+    output: led_g_output
+  - platform: binary
+    id: led_b_light
+    name: "Blue LED"
+    output: led_b_output
+    restore_mode: ALWAYS_ON  # Initial state
+
+
+binary_sensor:
+  - platform: gpio
+    pin: 
+      number: GPIO10
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Toggle button"
+    filters:
+      - delayed_off: 150ms #this stops on/off commands from spamming
+    on_press:
+      then:
+        - if:
+            condition:
+              light.is_on: led_b_light
+            then:
+              - light.turn_off: led_b_light
+              - light.turn_on: led_g_light
+            else:
+              - light.turn_off: led_g_light
+              - light.turn_on: led_b_light
